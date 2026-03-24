@@ -1,8 +1,9 @@
 import { useState,useEffect } from "react";
-import { auth, googleProvider } from "../firebase/config";
+import { auth } from "../firebase/config";
 import {
   signInWithEmailAndPassword,
   signInWithPopup,
+  GoogleAuthProvider
 } from "firebase/auth";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
@@ -22,6 +23,8 @@ const Login = () => {
     await signInWithPopup(auth, googleProvider);
     navigate("/dashboard");
   };
+
+  const googleProvider = new GoogleAuthProvider();
 
   useEffect(() => {
     if (user) navigate("/dashboard");
