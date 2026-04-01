@@ -1,5 +1,74 @@
 @import "tailwindcss";
+@import url('https://fonts.googleapis.com/css2?family=Manrope:wght@200..800&family=Poppins&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Manrope:wght@200..800&family=Inter:wght@100..900&display=swap');
 
-*{
-    font-family: "'DM Sans', sans-serif";
+@layer base {
+  body {
+    font-family: 'Manrope', sans-serif;
+    background-color: #ffffff;
+  }
+}
+
+@theme {
+    --font-heading: 'Manrope', sans-serif;
+    --font-body: 'Inter', sans-serif;
+    --font-label: 'Inter', sans-serif;
+    --color-primary: #0058be;
+    --color-secondary: #6177A5;
+    --color-tertiary: #D16900;
+    --color-neutral: #F8FAFC;
+    --color-desc: #191c1e;
+    --color-surface: #f7f9fb;
+    --color-surface-select: #d8e2ff;
+    --color-surface-variant: #e3e4e6;
+    --color-on-select: #001a42;
+}
+
+@layer components{
+    .glass-nav {
+        background: rgba(255, 255, 255, 0.8);
+        backdrop-filter: blur(20px);
+    }
+
+    .hero-gradient-text {
+        background: linear-gradient(135deg, #0058be 0%, #2170e4 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+    }
+
+    .primary-cta {
+        background: linear-gradient(135deg, #0058be 0%, #2170e4 100%);
+        color: var(--color-neutral);
+        border: 2px solid transparent;
+        padding: 10px 20px;
+        border-radius: 12px;
+        font-family: var(--font-heading);
+        line-height: var(--tw-leading, var(--text-sm--line-height));
+        cursor: pointer;
+    }
+
+    .primary-cta-hover:hover{
+        background: linear-gradient(135deg, #2170e4 0%, #0058be 100%);
+    }
+
+    .secondary-cta {
+        background: var(--color-surface);
+        color: var(--color-primary);
+        border: 2px solid var(--color-primary);
+        padding: 10px 20px;
+        border-radius: 12px;
+        font-family: var(--font-heading);
+        line-height: var(--tw-leading, var(--text-sm--line-height));
+        cursor: pointer;
+    }
+
+    .secondary-cta-hover:hover {
+        background: linear-gradient(135deg, #0058be 0%, #2170e4 100%);
+        border:2px solid transparent;
+        color: var(--color-surface);
+    }
+
+    .bento-inner-shadow {
+        box-shadow: inset 0 2px 4px 0 rgba(0, 0, 0, 0.05);
+    }
 }
