@@ -52,20 +52,17 @@
     }
 
     .secondary-cta {
-        background: var(--color-surface);
-        color: var(--color-primary);
-        border: 2px solid var(--color-primary);
+        color: rgb(73, 73, 73);
         padding: 10px 20px;
-        border-radius: 12px;
         font-family: var(--font-heading);
         line-height: var(--tw-leading, var(--text-sm--line-height));
         cursor: pointer;
+        border-radius: 12px;
     }
 
     .secondary-cta-hover:hover {
-        background: linear-gradient(135deg, #0058be 0%, #2170e4 100%);
-        border:2px solid transparent;
-        color: var(--color-surface);
+        background: rgb(237, 236, 236);
+        color: black;
     }
 
     .bento-inner-shadow {
