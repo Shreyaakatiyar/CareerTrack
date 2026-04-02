@@ -3,6 +3,7 @@ import { auth } from "../firebase/config";
 import { createUserWithEmailAndPassword } from "firebase/auth";
 import { GoogleAuthProvider, signInWithPopup } from "firebase/auth";
 import { useNavigate, Link } from "react-router-dom";
+import { IoMdAdd } from "react-icons/io";
 
 const Signup = () => {
   const [fullName, setFullName] = useState("");
@@ -110,75 +111,46 @@ const Signup = () => {
   return (
     <div className="min-h-screen flex" style={{ fontFamily: "'DM Sans', sans-serif" }}>
       {/* ── Left Panel ── */}
-      <div
-        className="hidden lg:flex lg:w-1/2 flex-col justify-between p-12 relative overflow-hidden"
-        style={{
-          background: "linear-gradient(135deg, #003d82 0%, #0052cc 50%, #1e5ba5 100%)"
-        }}
-      >
-        {/* Top - Brand */}
-        <div>
-          <h1 className="text-white text-2xl font-bold tracking-tight">CareerTrack</h1>
-        </div>
-
-        {/* Middle - Hero Content */}
-        <div className="relative z-10">
-          <div
-            className="inline-block px-3 py-1.5 rounded-full text-xs font-semibold mb-6"
-            style={{ background: "rgba(255,255,255,0.15)", color: "#a0d9ff" }}
-          >
-            THE PROFESSIONAL CHOICE
+      <header className="absolute top-0 z-50 w-full">
+          <div className="flex items-center justify-between px-8 py-6 w-full max-w-360 mx-auto">
+            <div className="text-2xl font-bold tracking-tighter text-white font-headline mix-blend-difference">CareerTrack</div>
           </div>
-
-          <h2 className="text-white text-5xl font-bold leading-tight mb-6">
-            Elevate your<br />
-            professional<br />
-            trajectory.
-          </h2>
-
-          <p className="text-blue-100 text-lg leading-relaxed mb-8">
-            Join a network of elite professionals leveraging<br />
-            intelligence to navigate their career growth.
+      </header>
+      <div className="hidden lg:flex w-1/2 hero-gradient relative overflow-hidden items-center justify-center p-16">
+        <div className="absolute inset-0 opacity-20">
+          <div className="absolute top-[20%] left-0 w-full h-px data-flow-line"></div>
+          <div className="absolute top-[40%] left-0 w-full h-px data-flow-line"></div>
+          <div className="absolute top-[60%] left-0 w-full h-px data-flow-line"></div>
+          <div className="absolute top-[80%] left-0 w-full h-px data-flow-line"></div>
+          <div className="absolute left-[20%] top-0 h-full w-px data-flow-line opacity-50"></div>
+          <div className="absolute left-[40%] top-0 h-full w-px data-flow-line opacity-50"></div>
+          <div className="absolute left-[60%] top-0 h-full w-px data-flow-line opacity-50"></div>
+          <div className="absolute left-[80%] top-0 h-full w-px data-flow-line opacity-50"></div>
+        </div>
+        <div className="absolute -top-24 -left-24 w-96 h-96 bg-blue-400/20 rounded-full blur-[120px]"></div>
+        <div className="absolute -bottom-48 -right-24 w-125 h-125 bg-indigo-600/30 rounded-full blur-[150px]"></div>
+        <div className="relative z-10 max-w-2xl">
+          <div className="inline-flex items-center px-4 py-1.5 rounded-full bg-white/10 backdrop-blur-md border border-white/20 text-white text-xs font-bold uppercase tracking-widest mb-8">
+          The Professional Choice
+          </div>
+          <h2 className="text-6xl font-extrabold text-white leading-tight font-headline tracking-tight mb-8">Elevate your professional trajectory.</h2>
+          <p className="text-xl text-blue-100 font-body leading-relaxed opacity-90 mb-12">Manage applications, track progress, and stay ahead with a
+              streamlined system designed to simplify your job search.
           </p>
-
-          {/* Members Badge */}
-          <div
-            className="inline-flex items-center gap-3 px-4 py-3 rounded-2xl"
-            style={{
-              background: "rgba(255,255,255,0.12)",
-              backdropFilter: "blur(10px)",
-              border: "1px solid rgba(255,255,255,0.2)"
-            }}
-          >
-            <div className="flex -space-x-2">
-              {[1, 2, 3].map((i) => (
-                <div
-                  key={i}
-                  className="w-8 h-8 rounded-full border-2 border-white flex items-center justify-center text-xs font-bold text-white"
-                  style={{
-                    background: `hsl(${200 + i * 20}, 70%, 50%)`,
-                  }}
-                >
-                  {i}
-                </div>
-              ))}
+          <div className="glass-panel p-8 rounded-2xl flex items-center gap-6 max-w-md">
+            <div className="flex -space-x-3">
+              <div className="w-12 h-12 rounded-full border-2 border-white bg-blue-500 flex items-center justify-center text-white font-bold">JD</div>
+              <div className="w-12 h-12 rounded-full border-2 border-white bg-indigo-500 flex items-center justify-center text-white font-bold">SM</div>
+              <div className="w-12 h-12 rounded-full border-2 border-white bg-slate-800 flex items-center justify-center text-white font-bold">
+                <IoMdAdd/>
+              </div>
             </div>
             <div>
-              <p className="text-white text-sm font-semibold">50k+ Members</p>
-              <p className="text-blue-100 text-xs">Growing by 200+ daily</p>
+              <div class="text-blue-900 font-bold text-lg">50k+ Members</div>
+              <div class="text-blue-800/70 text-sm">Growing by 200+ daily</div>
             </div>
           </div>
         </div>
-
-        {/* Decorative circles */}
-        <div
-          className="absolute -top-20 -right-20 w-80 h-80 rounded-full opacity-10"
-          style={{ background: "white" }}
-        />
-        <div
-          className="absolute bottom-0 -left-32 w-64 h-64 rounded-full opacity-5"
-          style={{ background: "white" }}
-        />
       </div>
 
       {/* ── Right Panel ── */}
@@ -192,10 +164,7 @@ const Signup = () => {
 
           {/* Error */}
           {error && (
-            <div
-              className="mb-6 px-4 py-3 rounded-lg text-sm"
-              style={{ background: "#fee2e2", color: "#991b1b", border: "1px solid #fecaca" }}
-            >
+            <div className="mb-6 px-4 py-3 rounded-lg text-sm bg-[#fee2e2] text-[#991b1b] border border-[#fecaca]">
               ⚠️ {error}
             </div>
           )}
@@ -228,7 +197,7 @@ const Signup = () => {
             {/* Work Email */}
             <div>
               <label className="block text-xs font-semibold text-gray-600 uppercase mb-2">
-                Work Email
+                Email
               </label>
               <input
                 type="email"
