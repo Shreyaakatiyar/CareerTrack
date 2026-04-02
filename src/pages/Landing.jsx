@@ -1,13 +1,8 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { MdWork } from "react-icons/md";
+import { MdWork, MdViewKanban, MdPsychology, MdAutoAwesome, MdAnalytics, MdDescription} from "react-icons/md";
 import { IoIosTrendingUp } from "react-icons/io";
 import { FaCircleCheck } from "react-icons/fa6";
-import { MdViewKanban } from "react-icons/md";
-import { MdPsychology } from "react-icons/md";
-import { MdAutoAwesome } from "react-icons/md";
-import { MdAnalytics } from "react-icons/md";
-import { MdDescription } from "react-icons/md";
 import { FaFileUpload } from "react-icons/fa";
 
 const animationStyles = `
@@ -239,7 +234,7 @@ const Landing = () => {
             </p>
             <div className={`flex flex-col sm:flex-row gap-3 sm:gap-4 pt-4 ${visibleElements['hero-text'] ? 'animate-fade-in-left stagger-2' : ''}`}>
               <button 
-                onClick={() => navigate('/dashboard')}
+                onClick={() => navigate('/signup')}
                 className="primary-cta primary-cta-hover text-base sm:text-lg font-medium transition-all duration-300 px-6 sm:px-8 py-3 sm:py-4 w-full sm:w-64"
               >
                 Start Tracking
@@ -394,7 +389,7 @@ const Landing = () => {
             </div>
 
             {/* analytics */}
-            <div className={`md:col-span-5 md:row-span-1 bg-orange-500 rounded-2xl sm:rounded-4xl p-6 sm:p-8 text-white relative overflow-hidden group ${visibleElements['features'] ? 'animate-fade-in-left stagger-3' : ''} hover:shadow-xl transition-shadow duration-300`} data-animate="feature-3">
+            <div className={`md:col-span-5 md:row-span-1 bg-tertiary rounded-2xl sm:rounded-4xl p-6 sm:p-8 text-white relative overflow-hidden group ${visibleElements['features'] ? 'animate-fade-in-left stagger-3' : ''} hover:shadow-xl transition-shadow duration-300`} data-animate="feature-3">
               <div className="relative z-10">
                 <MdAnalytics className="text-white mb-4 text-2xl sm:text-4xl" />
                 <h3 className="text-xl sm:text-2xl font-headline font-bold mb-3">
@@ -446,7 +441,7 @@ const Landing = () => {
             <h2 className='text-2xl sm:text-4xl md:text-5xl lg:text-6xl font-heading font-extrabold tracking-tight text-white relative z-10'>Take Control of Your <br/> Job Search Today</h2>
             <p className='text-base sm:text-lg md:text-xl text-gray-300 max-w-xl mx-auto relative z-10'>Start tracking your applications, stay organized, and move closer to your next opportunity with confidence.</p>
             <div className='relative z-10'>
-              <button onClick={() => navigate('/signup')} className='font-semibold text-base sm:text-lg px-6 sm:px-8 py-3 sm:py-4 bg-blue-600 hover:bg-blue-700 text-white rounded-full transition-colors duration-300'>Get Started</button>
+              <button onClick={() => navigate('/signup')} className='font-semibold text-base sm:text-lg px-6 sm:px-8 py-3 sm:py-4 bg-blue-600 hover:bg-blue-700 text-white rounded-full transition-colors duration-300 cursor-pointer'>Get Started</button>
             </div>
           </div>
         </section>
