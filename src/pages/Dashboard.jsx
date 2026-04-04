@@ -2,12 +2,16 @@ import { useAuth } from '../context/AuthContext'
 import { useNavigate } from 'react-router-dom'
 import { IoSearch } from "react-icons/io5";
 import { IoIosAddCircle, IoIosNotifications } from "react-icons/io";
+import { TbFileDescriptionFilled } from "react-icons/tb";
+import { MdForum, MdCancel } from "react-icons/md";
+import { FaStar } from "react-icons/fa6";
 
 const Dashboard = () => {
   const { user } = useAuth()
   const navigate = useNavigate()
 
   return (
+    <>
     <section className='md:ml-64 min-h-screen'>
       <header className='sticky top-0 z-50 w-full bg-white backdrop-blur-md shadow-sm text-sm font-medium tracking-tight'>
         <div className='flex items-center justify-between px-6 py-3 w-full'>
@@ -16,7 +20,7 @@ const Dashboard = () => {
               <span className='absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none text-slate-400'>
                 <IoSearch className='text-lg'/>
               </span>
-              <input class="bg-[#f2f6fa] border-none rounded-full pl-10 pr-4 py-2 w-64 focus:ring-2 focus:ring-primary/10 transition-all text-sm" placeholder="Search applications..." type="text"/>
+              <input class="bg-[#f2f6fa] border-none rounded-full pl-10 pr-4 py-2 w-100 focus:ring-2 focus:ring-primary/10 transition-all text-sm" placeholder="Search applications..." type="text"/>
             </div>
           </div>
           <div className='flex items-center gap-4'>
@@ -33,7 +37,64 @@ const Dashboard = () => {
         </div>
         <div className="bg-slate-100 h-px"></div>
       </header>
+      <div className='px-10 py-10 max-w-7xl mx-auto'>
+        <div className='mb-12'>
+          <h2 className="font-heading text-3xl font-extrabold text-desc tracking-tight mb-2">Track your applications efficiently</h2>
+          <p className="text-desc/60 text-md">Good morning, Alex. You have 3 interviews scheduled for this week.</p>
+        </div>
+
+        {/* stats */}
+        <div className='grid grid-cols-1 md:grid-cols-4 gap-6 mb-12'>
+          {/* applications */}
+          <div className='bg-white p-6 rounded-xl shadow-[0px_12px_32px_rgba(25,28,30,0.04)] hover:scale-[1.02] transition-transform'>
+            <div className='flex justify-between items-start mb-4'>
+              <div className='p-2 bg-blue-50 text-blue-600 rounded-lg'>
+                <TbFileDescriptionFilled/>
+              </div>
+              <span class="text-xs font-bold text-emerald-600 bg-emerald-50 px-2 py-1 rounded-full">+12%</span>
+            </div>
+            <p class="text-desc text-sm font-medium mb-1">Total Applications</p>
+            <p class="font-heading text-3xl font-bold">128</p> 
+          </div>
+          {/* interviews  */}
+          <div className='bg-white p-6 rounded-xl shadow-[0px_12px_32px_rgba(25,28,30,0.04)] hover:scale-[1.02] transition-transform'>
+            <div className='flex justify-between items-start mb-4'>
+              <div className='p-2 bg-purple-50 text-purple-600 rounded-lg'>
+                <MdForum/>
+              </div>
+              <span class="text-xs font-bold text-purple-600 bg-purple-50 px-2 py-1 rounded-full">Active</span>
+            </div>
+            <p class="text-desc text-sm font-medium mb-1">Interviews</p>
+            <p class="font-heading text-3xl font-bold">14</p> 
+          </div>
+          {/* rejections */}
+          <div className='bg-white p-6 rounded-xl shadow-[0px_12px_32px_rgba(25,28,30,0.04)] hover:scale-[1.02] transition-transform'>
+            <div className='flex justify-between items-start mb-4'>
+              <div className='p-2 bg-rose-50 text-rose-600 rounded-lg'>
+                <MdCancel/>
+              </div>
+            </div>
+            <p class="text-desc text-sm font-medium mb-1">Rejections</p>
+            <p class="font-heading text-3xl font-bold">42</p> 
+          </div>
+          {/* offers */}
+          <div className='bg-white p-6 rounded-xl shadow-[0px_12px_32px_rgba(25,28,30,0.04)] hover:scale-[1.02] transition-transform'>
+            <div className='flex justify-between items-start mb-4'>
+              <div className='p-2 bg-primary/10 text-primary rounded-lg'>
+                <FaStar/>
+              </div>
+              <span class="text-xs font-bold text-primary bg-primary/10 px-2 py-1 rounded-full">New!</span>
+            </div>
+            <p class="text-desc text-sm font-medium mb-1">Offers</p>
+            <p class="font-heading text-3xl font-bold">2</p> 
+          </div>
+        </div>
+
+        {/* charts and analytics */}
+        
+      </div>
     </section>
+    </>
   )
 }
 
