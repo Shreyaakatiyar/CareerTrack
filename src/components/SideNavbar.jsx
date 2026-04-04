@@ -5,7 +5,7 @@ import { signOut } from 'firebase/auth'
 import { useAuth } from '../context/AuthContext'
 import { RiDashboardFill } from "react-icons/ri";
 import { IoIosListBox } from "react-icons/io";
-import { MdLogout, MdPsychology } from "react-icons/md";
+import { MdLogout, MdPsychology, MdSettings } from "react-icons/md";
 import { IoAnalyticsSharp } from "react-icons/io5";
 
 const SideNavbar = () => {
@@ -19,6 +19,7 @@ const SideNavbar = () => {
     { id: "applications", label: "Applications", icon: IoIosListBox, path: "/dashboard/applications" },
     { id: "analytics", label: "Analytics", icon: IoAnalyticsSharp, path: "/dashboard/analytics" },
     { id: "insights", label: "AI Insights", icon: MdPsychology, path: "/dashboard/insights" },
+    { id: "settings", label: "Settings", icon: MdSettings, path: "/dashboard/settings" },
   ];
 
   const getActiveNav = () => {

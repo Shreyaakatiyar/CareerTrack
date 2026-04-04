@@ -6,6 +6,8 @@ import Dashboard from "./pages/Dashboard";
 import Applications from "./pages/Applications";
 import Analytics from "./pages/Analytics";
 import AIInsights from "./pages/AIInsights";
+import Settings from "./pages/Settings";
+import EditProfile from "./pages/EditProfile";
 import SideNavbar from "./components/SideNavbar";
 import ProtectedRoute from "./components/ProtectedRoute";
 
@@ -52,6 +54,24 @@ function App() {
             <ProtectedRoute>
               <SideNavbar />
               <AIInsights />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/dashboard/settings"
+          element={
+            <ProtectedRoute>
+              <SideNavbar />
+              <Settings />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/dashboard/profile"
+          element={
+            <ProtectedRoute>
+              <SideNavbar />
+              <EditProfile />
             </ProtectedRoute>
           }
         />
