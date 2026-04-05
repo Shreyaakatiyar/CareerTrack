@@ -7,6 +7,7 @@ import { MdForum, MdCancel } from "react-icons/md";
 import { FaStar } from "react-icons/fa6";
 import ApplicationTrendChart from '../components/ApplicationTrendChart'
 import ApplicationStatusChart from '../components/ApplicationStatusChart'
+import { IoMdMore } from "react-icons/io";
 
 const Dashboard = () => {
   const { user } = useAuth()
@@ -119,6 +120,81 @@ const Dashboard = () => {
             </div>
             <div className='h-64'>
               <ApplicationStatusChart />
+            </div>
+          </div>
+        </div>
+        {/* recent applications */}
+        <div className='bg-white rounded-xl shadow-[0px_12px_32px_rgba(25,28,30,0.04)] overflow-hidden'>
+          <div className="px-8 py-6 flex items-center justify-between border-b border-slate-50">
+            <h3 className="font-headline text-xl font-bold">Recent Applications</h3>
+            <button class="text-primary text-sm font-semibold hover:underline">View all applications</button>
+          </div>
+          <div className='divide-y divide-slate-50'>
+            {/* card1 */}
+            <div className='px-8 py-6 flex items-center justify-between hover:bg-slate-50 transition-colors'>
+              <div className='flex items-center gap-6'>
+                <div className="h-12 w-12 bg-white rounded-xl shadow-sm border border-slate-100 flex items-center justify-center p-2">
+                  <img alt="Company Logo" className="h-full object-contain" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBETZyViwrOjLD2haeyRriii3phWhmBA3sn-PXaO3yb4SgicJlKviLy28yKuX6eGDriD2JQafLg8B3Y4Sw5jM7XBL6WfqKBM7Nk4GCKrgTEBullyHB-64gsf6fXoKYarp01yzFL6GLYAOdj5f1x9MjoKI_zVUi3E42s_G-4r6wEZOmMQ1hq8zA_DQ2gtwh8VhylQ0pwsXugoJ1ZpKM4sqtsx_8-_G-JdWFpsOBHh-2p-b4BFnGtZezqrUyN_Te1HtKZut_lqVI8zPo"/>
+                </div>
+                <div>
+                  <h4 className="font-bold text-on-surface">Senior Product Designer</h4>
+                  <p className="text-on-surface-variant text-sm">Google • Mountain View, CA</p>
+                </div>
+              </div>
+              <div className='flex items-center gap-12'>
+                <div className="text-right">
+                  <p className="text-[11px] font-bold uppercase tracking-wider text-slate-400 mb-1">Applied Date</p>
+                  <p clasName="text-sm text-desc">Oct 24, 2023</p>
+                </div>
+                <span className="px-3 py-1 bg-blue-200 text-desc rounded-full text-xs font-bold">Interviewing</span>
+                <button className="cursor-pointer p-2 text-slate-400 hover:text-desc transition-colors">
+                  <IoMdMore className='h-5 w-5'/>
+                </button>
+              </div>
+            </div>
+              {/* card2 */}
+              <div className='px-8 py-6 flex items-center justify-between hover:bg-slate-50 transition-colors'>
+              <div className='flex items-center gap-6'>
+                <div className="h-12 w-12 bg-white rounded-xl shadow-sm border border-slate-100 flex items-center justify-center p-2">
+                  <img alt="Company Logo" className="h-full object-contain" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBETZyViwrOjLD2haeyRriii3phWhmBA3sn-PXaO3yb4SgicJlKviLy28yKuX6eGDriD2JQafLg8B3Y4Sw5jM7XBL6WfqKBM7Nk4GCKrgTEBullyHB-64gsf6fXoKYarp01yzFL6GLYAOdj5f1x9MjoKI_zVUi3E42s_G-4r6wEZOmMQ1hq8zA_DQ2gtwh8VhylQ0pwsXugoJ1ZpKM4sqtsx_8-_G-JdWFpsOBHh-2p-b4BFnGtZezqrUyN_Te1HtKZut_lqVI8zPo"/>
+                </div>
+                <div>
+                  <h4 className="font-bold text-on-surface">Senior Product Designer</h4>
+                  <p className="text-on-surface-variant text-sm">Google • Mountain View, CA</p>
+                </div>
+              </div>
+              <div className='flex items-center gap-12'>
+                <div className="text-right">
+                  <p className="text-[11px] font-bold uppercase tracking-wider text-slate-400 mb-1">Applied Date</p>
+                  <p clasName="text-sm text-desc">Oct 24, 2023</p>
+                </div>
+                <span className="px-3 py-1 bg-blue-200 text-desc rounded-full text-xs font-bold">Interviewing</span>
+                <button className="cursor-pointer p-2 text-slate-400 hover:text-desc transition-colors">
+                  <IoMdMore className='h-5 w-5'/>
+                </button>
+              </div>
+            </div>
+            {/* card3 */}
+            <div className='px-8 py-6 flex items-center justify-between hover:bg-slate-50 transition-colors'>
+              <div className='flex items-center gap-6'>
+                <div className="h-12 w-12 bg-white rounded-xl shadow-sm border border-slate-100 flex items-center justify-center p-2">
+                  <img alt="Company Logo" className="h-full object-contain" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBETZyViwrOjLD2haeyRriii3phWhmBA3sn-PXaO3yb4SgicJlKviLy28yKuX6eGDriD2JQafLg8B3Y4Sw5jM7XBL6WfqKBM7Nk4GCKrgTEBullyHB-64gsf6fXoKYarp01yzFL6GLYAOdj5f1x9MjoKI_zVUi3E42s_G-4r6wEZOmMQ1hq8zA_DQ2gtwh8VhylQ0pwsXugoJ1ZpKM4sqtsx_8-_G-JdWFpsOBHh-2p-b4BFnGtZezqrUyN_Te1HtKZut_lqVI8zPo"/>
+                </div>
+                <div>
+                  <h4 className="font-bold text-on-surface">Senior Product Designer</h4>
+                  <p className="text-on-surface-variant text-sm">Google • Mountain View, CA</p>
+                </div>
+              </div>
+              <div className='flex items-center gap-12'>
+                <div className="text-right">
+                  <p className="text-[11px] font-bold uppercase tracking-wider text-slate-400 mb-1">Applied Date</p>
+                  <p clasName="text-sm text-desc">Oct 24, 2023</p>
+                </div>
+                <span className="px-3 py-1 bg-blue-200 text-desc rounded-full text-xs font-bold">Interviewing</span>
+                <button className="cursor-pointer p-2 text-slate-400 hover:text-desc transition-colors">
+                  <IoMdMore className='h-5 w-5'/>
+                </button>
+              </div>
             </div>
           </div>
         </div>
