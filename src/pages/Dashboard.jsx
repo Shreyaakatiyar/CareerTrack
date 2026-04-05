@@ -5,6 +5,8 @@ import { IoIosAddCircle, IoIosNotifications } from "react-icons/io";
 import { TbFileDescriptionFilled } from "react-icons/tb";
 import { MdForum, MdCancel } from "react-icons/md";
 import { FaStar } from "react-icons/fa6";
+import ApplicationTrendChart from '../components/ApplicationTrendChart'
+import ApplicationStatusChart from '../components/ApplicationStatusChart'
 
 const Dashboard = () => {
   const { user } = useAuth()
@@ -91,7 +93,35 @@ const Dashboard = () => {
         </div>
 
         {/* charts and analytics */}
-        
+        <div className='grid grid-cols-1 lg:grid-cols-3 gap-8 mb-12'>
+          {/* trend line chart */}
+          <div className='lg:col-span-2 bg-white p-8 rounded-xl shadow-[0px_12px_32px_rgba(25,28,30,0.04)]'>
+            <div className='flex items-center justify-between mb-8'>
+              <div>
+                <h3 className="font-heading text-xl font-bold">Application Trends</h3>
+                <p className="text-desc text-sm">Monthly submission activity</p>
+              </div>
+              <select className="px-2 py-2 bg-neutral-100 border-none rounded-lg text-sm font-medium focus:ring-2 focus:ring-primary/20">
+                <option>Last 6 Months</option>
+                <option>Last Year</option>
+              </select>
+            </div>
+            <div className='h-64 flex items-end justify-between gap-4 px-2'>
+              <ApplicationTrendChart />
+            </div>
+          </div>
+
+          {/* status doughnut chart */}
+          <div className='bg-white p-8 rounded-xl shadow-[0px_12px_32px_rgba(25,28,30,0.04)]'>
+            <div className='mb-8'>
+              <h3 className="font-heading text-xl font-bold">Application Status</h3>
+              <p className="text-desc text-sm">Summary of all applications</p>
+            </div>
+            <div className='h-64'>
+              <ApplicationStatusChart />
+            </div>
+          </div>
+        </div>
       </div>
     </section>
     </>
