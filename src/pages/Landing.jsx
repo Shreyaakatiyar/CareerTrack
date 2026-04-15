@@ -80,7 +80,6 @@ const animationStyles = `
 const Landing = () => {
   const navigate = useNavigate();
   const [visibleElements, setVisibleElements] = useState({});
-  const [menuOpen, setMenuOpen] = useState(false);
 
   useEffect(() => {
     const observers = {};
