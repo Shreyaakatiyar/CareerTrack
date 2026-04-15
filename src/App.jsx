@@ -10,9 +10,11 @@ import Settings from "./pages/Settings";
 import EditProfile from "./pages/EditProfile";
 import SideNavbar from "./components/SideNavbar";
 import ProtectedRoute from "./components/ProtectedRoute";
+import { ApplicationsProvider } from "./context/ApplicationsContext";
 
 function App() {
   return (
+    <ApplicationsProvider>
     <BrowserRouter>
       <Routes>
         {/* Public routes */}
@@ -77,6 +79,7 @@ function App() {
         />
       </Routes>
     </BrowserRouter>
+    </ApplicationsProvider>
   )
 }
 
