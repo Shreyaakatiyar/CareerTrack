@@ -11,6 +11,7 @@ import EditProfile from "./pages/EditProfile";
 import SideNavbar from "./components/SideNavbar";
 import ProtectedRoute from "./components/ProtectedRoute";
 import { ApplicationsProvider } from "./context/ApplicationsContext";
+import Kanban from "./pages/Kanban";
 
 function App() {
   return (

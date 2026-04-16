@@ -1,146 +1,234 @@
-import { useState } from 'react'
-import { useApplications } from '../context/ApplicationsContext'
-import AddApplicationModal from '../components/AddApplicationModal'
-import { MdDelete, MdEdit } from 'react-icons/md'
+import { useState } from "react";
+import { useApplications } from "../context/ApplicationsContext";
+import AddApplicationModal from "../components/AddApplicationModal";
+import { MdDelete, MdEdit } from "react-icons/md";
+import {
+  DragDropContext,
+  Droppable,
+  Draggable,
+} from "@hello-pangea/dnd";
+
+const statuses = ["Applied", "Interviewing", "Offer", "Rejected"];
+
+// 🎨 COLOR SYSTEM (matches your chart)
+const statusStyles = {
+  Applied: {
+    bg: "bg-blue-50",
+    text: "text-blue-600",
+  },
+  Interviewing: {
+    bg: "bg-purple-50",
+    text: "text-purple-600",
+  },
+  Offer: {
+    bg: "bg-pink-50",
+    text: "text-pink-600",
+  },
+  Rejected: {
+    bg: "bg-red-50",
+    text: "text-red-500",
+  },
+};
 
 const Applications = () => {
-  const { applications, addApplication, deleteApplication, updateApplication, loading } = useApplications()
-  const [isModalOpen, setIsModalOpen] = useState(false)
-  const [editingApp, setEditingApp] = useState(null)
+  const {
+    applications,
+    addApplication,
+    deleteApplication,
+    updateApplication,
+    loading,
+  } = useApplications();
+
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [editingApp, setEditingApp] = useState(null);
+
+  // 🔥 GROUP DATA
+  const groupedApplications = statuses.reduce((acc, status) => {
+    acc[status] = applications.filter((app) => app.status === status);
+    return acc;
+  }, {});
+
+  // 🔥 DRAG HANDLER
+  const handleDragEnd = async (result) => {
+    if (!result.destination) return;
+
+    const { source, destination } = result;
+
+    const sourceStatus = source.droppableId;
+    const destStatus = destination.droppableId;
+
+    if (sourceStatus === destStatus) return;
+
+    const movedApp = groupedApplications[sourceStatus][source.index];
+
+    await updateApplication(movedApp.id, {
+      ...movedApp,
+      status: destStatus,
+    });
+  };
 
   const handleAddApplication = async (formData) => {
-    await addApplication(formData)
-    setIsModalOpen(false)
-  }
+    await addApplication(formData);
+    setIsModalOpen(false);
+  };
 
   const handleEditApplication = (app) => {
-    setEditingApp(app)
-    setIsModalOpen(true)
-  }
+    setEditingApp(app);
+    setIsModalOpen(true);
+  };
 
   const handleUpdateApplication = async (id, formData) => {
-    await updateApplication(id, formData)
-    setEditingApp(null)
-    setIsModalOpen(false)
-  }
+    await updateApplication(id, formData);
+    setEditingApp(null);
+    setIsModalOpen(false);
+  };
 
   const handleDeleteApplication = async (id) => {
-    await deleteApplication(id)
-  }
-
-  const statusColors = {
-    'Applied': 'bg-blue-100 text-blue-800',
-    'Interviewing': 'bg-purple-100 text-purple-800',
-    'Offer': 'bg-green-100 text-green-800',
-    'Rejected': 'bg-red-100 text-red-800'
-  }
+    await deleteApplication(id);
+  };
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
-        <div className="text-center">
-          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto mb-4"></div>
-          <p className="text-gray-600">Loading applications...</p>
-        </div>
+      <div className="min-h-screen flex items-center justify-center text-gray-500">
+        Loading...
       </div>
-    )
+    );
   }
 
   return (
-    <div className="min-h-screen bg-gray-50">
-      {/* Header */}
-      <div className="bg-white border-b border-gray-200">
-        <div className="ml-64 px-8 py-8">
-          <h1 className="text-3xl font-bold text-gray-900">Applications</h1>
-          <p className="text-gray-600 mt-2">Track and manage all your job applications</p>
+    <div className="min-h-screen bg-[#f8fafc]">
+      {/* HEADER */}
+      <div className="bg-white border-b border-gray-100">
+        <div className="ml-64 px-8 py-8 flex justify-between items-center">
+          <div>
+            <h1 className="text-2xl font-semibold text-gray-900">
+              Applications
+            </h1>
+            <p className="text-sm text-gray-500 mt-1">
+              Track your job applications visually
+            </p>
+          </div>
+
+          <button
+            onClick={() => setIsModalOpen(true)}
+            className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg text-sm transition"
+          >
+            Add Application
+          </button>
         </div>
       </div>
 
-      {/* Content */}
+      {/* KANBAN */}
       <div className="ml-64 p-8">
-        {applications.length === 0 ? (
-          <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-12 text-center">
-            <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-blue-100 mb-4">
-              <svg className="w-8 h-8 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
-              </svg>
-            </div>
-            <h2 className="text-xl font-semibold text-gray-900 mb-2">No Applications Yet</h2>
-            <p className="text-gray-600 mb-6">Start adding job applications to track your progress</p>
-            <button onClick={() => setIsModalOpen(true)} className="px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors duration-200 font-semibold">
-              Add Application
-            </button>
+        <DragDropContext onDragEnd={handleDragEnd}>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 transition-all duration-300">
+            {statuses.map((status) => (
+              <Droppable droppableId={status} key={status}>
+                {(provided) => (
+                  <div
+                    ref={provided.innerRef}
+                    {...provided.droppableProps}
+                    className={`rounded-2xl p-5 min-h-[500px] ${statusStyles[status].bg}`}
+                  >
+                    {/* COLUMN HEADER */}
+                    <div className="flex justify-between items-center mb-6">
+                      <h3
+                        className={`text-xs font-semibold uppercase tracking-wider ${statusStyles[status].text}`}
+                      >
+                        {status}
+                      </h3>
+
+                      <span className="text-xs bg-white px-2.5 py-1 rounded-full shadow-sm text-gray-600">
+                        {groupedApplications[status].length}
+                      </span>
+                    </div>
+
+                    {/* CARDS */}
+                    <div className="space-y-4">
+                      {groupedApplications[status].map((app, index) => (
+                        <Draggable
+                          draggableId={app.id.toString()}
+                          index={index}
+                          key={app.id}
+                        >
+                          {(provided) => (
+                            <div
+                              ref={provided.innerRef}
+                              {...provided.draggableProps}
+                              {...provided.dragHandleProps}
+                              style={{
+                                ...provided.draggableProps.style,
+                                transition: "transform 0.2s ease",
+                              }}
+                              className="group bg-white p-4 rounded-2xl shadow-sm hover:shadow-xl transition-all duration-300 ease-in-out cursor-pointer active:scale-[0.97]"
+                            >
+                              {/* DATE */}
+                              <div className="flex justify-between mb-2">
+                                <span className="text-[11px] text-gray-400">
+                                  {app.dateApplied}
+                                </span>
+                              </div>
+
+                              {/* ROLE */}
+                              <h4 className="font-semibold text-gray-900 text-sm leading-snug">
+                                {app.jobRole}
+                              </h4>
+
+                              {/* COMPANY */}
+                              <p className="text-sm text-gray-500 mt-1">
+                                {app.companyName}
+                              </p>
+
+                              {/* STATUS TAG */}
+                              <div className="mt-3">
+                                <span
+                                  className={`text-[11px] px-2 py-1 rounded-full ${statusStyles[app.status].bg} ${statusStyles[app.status].text}`}
+                                >
+                                  {app.status}
+                                </span>
+                              </div>
+
+                              {/* ACTIONS */}
+                              <div className="flex justify-end gap-3 mt-4 opacity-0 group-hover:opacity-100 transition">
+                                <MdEdit
+                                  onClick={() => handleEditApplication(app)}
+                                  className="text-gray-400 hover:text-blue-500 cursor-pointer"
+                                />
+                                <MdDelete
+                                  onClick={() =>
+                                    handleDeleteApplication(app.id)
+                                  }
+                                  className="text-gray-400 hover:text-red-500 cursor-pointer"
+                                />
+                              </div>
+                            </div>
+                          )}
+                        </Draggable>
+                      ))}
+
+                      {provided.placeholder}
+                    </div>
+                  </div>
+                )}
+              </Droppable>
+            ))}
           </div>
-        ) : (
-          <div className="bg-white rounded-lg shadow-sm border border-gray-200 overflow-hidden">
-            <div className="px-6 py-4 border-b border-gray-200 flex items-center justify-between">
-              <h2 className="text-lg font-semibold text-gray-900">All Applications</h2>
-              <button onClick={() => setIsModalOpen(true)} className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors text-sm font-semibold">
-                Add Application
-              </button>
-            </div>
-            <div className="overflow-x-auto">
-              <table className="w-full">
-                <thead>
-                  <tr className="border-b border-gray-200 bg-gray-50">
-                    <th className="px-6 py-3 text-left text-sm font-semibold text-gray-900">Company</th>
-                    <th className="px-6 py-3 text-left text-sm font-semibold text-gray-900">Job Role</th>
-                    <th className="px-6 py-3 text-left text-sm font-semibold text-gray-900">Status</th>
-                    <th className="px-6 py-3 text-left text-sm font-semibold text-gray-900">Date Applied</th>
-                    <th className="px-6 py-3 text-left text-sm font-semibold text-gray-900">Actions</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {applications.map((app) => (
-                    <tr key={app.id} className="border-b border-gray-200 hover:bg-gray-50 transition-colors">
-                      <td className="px-6 py-4 text-sm font-semibold text-gray-900">{app.companyName}</td>
-                      <td className="px-6 py-4 text-sm text-gray-600">{app.jobRole}</td>
-                      <td className="px-6 py-4 text-sm">
-                        <span className={`px-3 py-1 rounded-full text-xs font-semibold ${statusColors[app.status] || 'bg-gray-100 text-gray-800'}`}>
-                          {app.status}
-                        </span>
-                      </td>
-                      <td className="px-6 py-4 text-sm text-gray-600">{app.dateApplied}</td>
-                      <td className="px-6 py-4 text-sm">
-                        <div className="flex items-center gap-3">
-                          <button 
-                            onClick={() => handleEditApplication(app)}
-                            className="text-blue-600 hover:text-blue-700 font-semibold transition-colors"
-                            title="Edit application"
-                          >
-                            <MdEdit className="w-5 h-5" />
-                          </button>
-                          <button 
-                            onClick={() => handleDeleteApplication(app.id)}
-                            className="text-red-600 hover:text-red-700 font-semibold transition-colors"
-                            title="Delete application"
-                          >
-                            <MdDelete className="w-5 h-5" />
-                          </button>
-                        </div>
-                      </td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
-          </div>
-        )}
+        </DragDropContext>
       </div>
 
-      <AddApplicationModal 
-        isOpen={isModalOpen} 
+      {/* MODAL */}
+      <AddApplicationModal
+        isOpen={isModalOpen}
         onClose={() => {
-          setIsModalOpen(false)
-          setEditingApp(null)
+          setIsModalOpen(false);
+          setEditingApp(null);
         }}
         onSave={handleAddApplication}
         editingApp={editingApp}
         onUpdate={handleUpdateApplication}
-        onDelete={handleDeleteApplication}
       />
     </div>
-  )
-}
+  );
+};
 
-export default Applications
+export default Applications;
