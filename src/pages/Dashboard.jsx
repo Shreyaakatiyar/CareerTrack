@@ -112,7 +112,7 @@ const Dashboard = () => {
                     return (
                       <div key={app.id} className='px-8 py-6 flex items-center justify-between hover:bg-slate-50 transition-colors'>
                         <div className='flex items-center gap-6 flex-1'>
-                          <div className="h-12 w-12 bg-gradient-to-br from-blue-400 to-blue-600 rounded-xl shadow-sm border border-blue-200 flex items-center justify-center text-white font-bold text-lg">
+                          <div className="h-12 w-12 bg-linear-to-br from-blue-400 to-blue-600 rounded-xl shadow-sm border border-blue-200 flex items-center justify-center text-white font-bold text-lg">
                             {app.companyName.charAt(0).toUpperCase()}
                           </div>
                           <div>
@@ -276,7 +276,7 @@ const Dashboard = () => {
                       return (
                         <div key={app.id} className='px-8 py-6 flex items-center justify-between hover:bg-slate-50 transition-colors'>
                           <div className='flex items-center gap-6 flex-1'>
-                            <div className="h-12 w-12 bg-gradient-to-br from-blue-400 to-blue-600 rounded-xl shadow-sm border border-blue-200 flex items-center justify-center text-white font-bold text-lg">
+                            <div className="h-12 w-12 bg-linear-to-br from-blue-400 to-blue-600 rounded-xl shadow-sm border border-blue-200 flex items-center justify-center text-white font-bold text-lg">
                               {app.companyName.charAt(0).toUpperCase()}
                             </div>
                             <div>

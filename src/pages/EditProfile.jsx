@@ -44,7 +44,6 @@ const EditProfile = () => {
 
   const handleSave = () => {
     console.log('Profile updated:', formData)
-    // Add save logic here
     navigate('/dashboard')
   }
 
@@ -93,7 +92,7 @@ const EditProfile = () => {
             <div className="text-sm text-gray-600">
               <p className="font-medium text-gray-900 mb-2">Recommended:</p>
               <ul className="space-y-1 text-xs">
-                <li>• Square image</li>
+                <li>• Portrait Size Image</li>
                 <li>• At least 400x400 pixels</li>
                 <li>• JPG, PNG, or GIF</li>
                 <li>• Max 5MB</li>
