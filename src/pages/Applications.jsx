@@ -126,7 +126,7 @@ const Applications = () => {
                   <div
                     ref={provided.innerRef}
                     {...provided.droppableProps}
-                    className={`rounded-2xl p-5 min-h-[500px] ${statusStyles[status].bg}`}
+                    className={`rounded-2xl p-5 min-h-125 ${statusStyles[status].bg}`}
                   >
                     {/* COLUMN HEADER */}
                     <div className="flex justify-between items-center mb-6">
