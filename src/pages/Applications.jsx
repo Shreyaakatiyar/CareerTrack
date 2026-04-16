@@ -10,7 +10,6 @@ import {
 
 const statuses = ["Applied", "Interviewing", "Offer", "Rejected"];
 
-// 🎨 COLOR SYSTEM (matches your chart)
 const statusStyles = {
   Applied: {
     bg: "bg-blue-50",
@@ -48,7 +47,6 @@ const Applications = () => {
     return acc;
   }, {});
 
-  // 🔥 DRAG HANDLER
   const handleDragEnd = async (result) => {
     if (!result.destination) return;
 
