@@ -1,7 +1,7 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { MdCancel } from 'react-icons/md'
 
-const AddApplicationModal = ({ isOpen, onClose, onSave }) => {
+const AddApplicationModal = ({ isOpen, onClose, onSave, editingApp = null, onDelete = null, onUpdate = null }) => {
   const [formData, setFormData] = useState({
     companyName: '',
     jobRole: '',
@@ -13,17 +13,20 @@ const AddApplicationModal = ({ isOpen, onClose, onSave }) => {
 
   const statusOptions = ['Applied', 'Interviewing', 'Offer', 'Rejected']
 
-  const handleInputChange = (e) => {
-    const { name, value } = e.target
-    setFormData(prev => ({
-      ...prev,
-      [name]: value
-    }))
-  }
-
-  const handleSubmit = () => {
-    if (formData.companyName && formData.jobRole && formData.dateApplied) {
-      onSave(formData)
+  // Initialize form with editing data when editing app changes
+  useEffect(() => {
+    if (editingApp) {
+      console.log('Populating form with editingApp:', editingApp) // Debug
+      setFormData({
+        companyName: editingApp.companyName || '',
+        jobRole: editingApp.jobRole || '',
+        status: editingApp.status || 'Applied',
+        dateApplied: editingApp.dateApplied || '',
+        jobLink: editingApp.jobLink || '',
+        internalNotes: editingApp.internalNotes || ''
+      })
+    } else {
+      console.log('Clearing form (no editingApp)') // Debug
       setFormData({
         companyName: '',
         jobRole: '',
@@ -32,21 +35,57 @@ const AddApplicationModal = ({ isOpen, onClose, onSave }) => {
         jobLink: '',
         internalNotes: ''
       })
+    }
+  }, [editingApp])
+
+  const handleInputChange = (e) => {
+    const { name, value } = e.target
+    setFormData(prev => ({
+      ...prev,
+      [name]: value
+    }))
+  }
+
+  const handleSubmit = async () => {
+    if (formData.companyName && formData.jobRole && formData.dateApplied) {
+      if (editingApp && onUpdate) {
+        await onUpdate(editingApp.id, formData)
+      } else {
+        await onSave(formData)
+      }
+      setFormData({
+        companyName: '',
+        jobRole: '',
+        status: 'Applied',
+        dateApplied: '',
+        jobLink: '',
+        internalNotes: ''
+      })
+      onClose()
     } else {
       alert('Please fill in all required fields')
+    }
+  }
+
+  const handleDelete = async () => {
+    if (editingApp && onDelete) {
+      if (window.confirm('Are you sure you want to delete this application?')) {
+        await onDelete(editingApp.id)
+        onClose()
+      }
     }
   }
 
   if (!isOpen) return null
 
   return (
-    <div className='fixed inset-0 backdrop-blur-xs flex items-center justify-center z-50'>
+    <div className='fixed inset-0 backdrop-blur-md flex items-center justify-center z-50'>
       <div className='bg-white rounded-xl shadow-2xl max-w-2xl w-full mx-4'>
         {/* Header */}
         <div className='flex items-center justify-between p-6 border-b border-gray-200'>
           <div>
-            <h2 className='text-2xl font-bold text-gray-900'>Add Application</h2>
-            <p className='text-gray-600 text-sm mt-1'>Track a new job opportunity</p>
+            <h2 className='text-2xl font-bold text-gray-900'>{editingApp ? 'Edit Application' : 'Add Application'}</h2>
+            <p className='text-gray-600 text-sm mt-1'>{editingApp ? 'Update your job opportunity details' : 'Track a new job opportunity'}</p>
           </div>
           <button onClick={onClose} className='text-gray-400 hover:text-gray-600 transition-colors'>
             <MdCancel className='w-6 h-6' />
@@ -139,9 +178,12 @@ const AddApplicationModal = ({ isOpen, onClose, onSave }) => {
 
         {/* Footer */}
         <div className='flex items-center justify-between p-6 border-t border-gray-200 bg-gray-50'>
-          <button className='text-red-600 hover:text-red-700 font-semibold transition-colors'>
-            Remove Application
-          </button>
+          {editingApp && (
+            <button onClick={handleDelete} className='text-red-600 hover:text-red-700 font-semibold transition-colors'>
+              Delete Application
+            </button>
+          )}
+          {!editingApp && <div />}
           <div className='flex gap-3'>
             <button
               onClick={onClose}
@@ -153,7 +195,7 @@ const AddApplicationModal = ({ isOpen, onClose, onSave }) => {
               onClick={handleSubmit}
               className='px-6 py-2 bg-blue-600 text-white rounded-lg font-semibold hover:bg-blue-700 transition-colors'
             >
-              Save Changes
+              {editingApp ? 'Update Application' : 'Save Changes'}
             </button>
           </div>
         </div>
