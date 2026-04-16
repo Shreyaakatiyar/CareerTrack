@@ -9,12 +9,18 @@ import {
 
 ChartJS.register(ArcElement, Tooltip, Legend)
 
-const ApplicationStatusChart = () => {
+const ApplicationStatusChart = ({ applications = [] }) => {
+  // Calculate status counts from applications
+  const applied = applications.filter(app => app.status === 'Applied').length
+  const interviewing = applications.filter(app => app.status === 'Interviewing').length
+  const offers = applications.filter(app => app.status === 'Offer').length
+  const rejected = applications.filter(app => app.status === 'Rejected').length
+
   const data = {
     labels: ['Applied', 'Interviews', 'Offers', 'Rejected'],
     datasets: [
       {
-        data: [128, 14, 2, 42],
+        data: [applied, interviewing, offers, rejected],
         backgroundColor: [
           '#3b82f6',
           '#8b5cf6',

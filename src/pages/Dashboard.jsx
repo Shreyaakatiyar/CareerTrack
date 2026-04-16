@@ -5,13 +5,24 @@ import { IoIosAddCircle, IoIosNotifications } from "react-icons/io";
 import { TbFileDescriptionFilled } from "react-icons/tb";
 import { MdForum, MdCancel } from "react-icons/md";
 import { FaStar } from "react-icons/fa6";
+import { useState } from 'react'
 import ApplicationTrendChart from '../components/ApplicationTrendChart'
 import ApplicationStatusChart from '../components/ApplicationStatusChart'
+import AddApplicationModal from '../components/AddApplicationModal'
+import { useApplications } from '../context/ApplicationsContext'
 import { IoMdMore } from "react-icons/io";
 
 const Dashboard = () => {
   const { user } = useAuth()
   const navigate = useNavigate()
+  const [isModalOpen, setIsModalOpen] = useState(false)
+  const { addApplication, applications } = useApplications()
+
+  // Calculate stats from real data
+  const totalApplications = applications.length
+  const interviews = applications.filter(app => app.status === 'Interviewing').length
+  const rejections = applications.filter(app => app.status === 'Rejected').length
+  const offers = applications.filter(app => app.status === 'Offer').length
 
   return (
     <>
@@ -30,7 +41,7 @@ const Dashboard = () => {
             <button className='p-2 text-slate-500 hover:bg-slate-50 rounded-full transition-colors active:scale-95'>
               <IoIosNotifications className='h-5 w-5 cursor-pointer'/>
             </button>
-            <button className='p-2 text-slate-500 hover:bg-slate-50 rounded-full transition-colors active:scale-95'>
+            <button onClick={() => setIsModalOpen(true)} className='p-2 text-slate-500 hover:bg-slate-50 rounded-full transition-colors active:scale-95'>
               <IoIosAddCircle className='h-5 w-5 cursor-pointer'/>
             </button>
             <div className="h-8 w-8 rounded-full bg-slate-200 overflow-hidden ml-2 border border-slate-100 cursor-pointer hover:shadow-lg transition-shadow hover:scale-110 transform duration-200" onClick={() => navigate('/dashboard/profile')}>
@@ -43,7 +54,7 @@ const Dashboard = () => {
       <div className='px-10 py-10 max-w-7xl mx-auto'>
         <div className='mb-12'>
           <h2 className="font-heading text-3xl font-extrabold text-desc tracking-tight mb-2">Track your applications efficiently</h2>
-          <p className="text-desc/60 text-md">Good morning, Alex. You have 3 interviews scheduled for this week.</p>
+          <p className="text-desc/60 text-md">Good morning, {user?.displayName || 'there'}. You have {interviews} interviews scheduled.</p>
         </div>
 
         {/* stats */}
@@ -54,10 +65,10 @@ const Dashboard = () => {
               <div className='p-2 bg-blue-50 text-blue-600 rounded-lg'>
                 <TbFileDescriptionFilled/>
               </div>
-              <span class="text-xs font-bold text-emerald-600 bg-emerald-50 px-2 py-1 rounded-full">+12%</span>
+              <span class="text-xs font-bold text-emerald-600 bg-emerald-50 px-2 py-1 rounded-full">Active</span>
             </div>
             <p class="text-desc text-sm font-medium mb-1">Total Applications</p>
-            <p class="font-heading text-3xl font-bold">128</p> 
+            <p class="font-heading text-3xl font-bold">{totalApplications}</p> 
           </div>
           {/* interviews  */}
           <div className='bg-white p-6 rounded-xl shadow-[0px_12px_32px_rgba(25,28,30,0.04)] hover:scale-[1.02] transition-transform'>
@@ -68,7 +79,7 @@ const Dashboard = () => {
               <span class="text-xs font-bold text-purple-600 bg-purple-50 px-2 py-1 rounded-full">Active</span>
             </div>
             <p class="text-desc text-sm font-medium mb-1">Interviews</p>
-            <p class="font-heading text-3xl font-bold">14</p> 
+            <p class="font-heading text-3xl font-bold">{interviews}</p> 
           </div>
           {/* rejections */}
           <div className='bg-white p-6 rounded-xl shadow-[0px_12px_32px_rgba(25,28,30,0.04)] hover:scale-[1.02] transition-transform'>
@@ -78,7 +89,7 @@ const Dashboard = () => {
               </div>
             </div>
             <p class="text-desc text-sm font-medium mb-1">Rejections</p>
-            <p class="font-heading text-3xl font-bold">42</p> 
+            <p class="font-heading text-3xl font-bold">{rejections}</p> 
           </div>
           {/* offers */}
           <div className='bg-white p-6 rounded-xl shadow-[0px_12px_32px_rgba(25,28,30,0.04)] hover:scale-[1.02] transition-transform'>
@@ -89,7 +100,7 @@ const Dashboard = () => {
               <span class="text-xs font-bold text-primary bg-primary/10 px-2 py-1 rounded-full">New!</span>
             </div>
             <p class="text-desc text-sm font-medium mb-1">Offers</p>
-            <p class="font-heading text-3xl font-bold">2</p> 
+            <p class="font-heading text-3xl font-bold">{offers}</p> 
           </div>
         </div>
 
@@ -108,7 +119,7 @@ const Dashboard = () => {
               </select>
             </div>
             <div className='h-64 flex items-end justify-between gap-4 px-2'>
-              <ApplicationTrendChart />
+              <ApplicationTrendChart applications={applications} />
             </div>
           </div>
 
@@ -119,7 +130,7 @@ const Dashboard = () => {
               <p className="text-desc text-sm">Summary of all applications</p>
             </div>
             <div className='h-64'>
-              <ApplicationStatusChart />
+              <ApplicationStatusChart applications={applications} />
             </div>
           </div>
         </div>
@@ -127,79 +138,67 @@ const Dashboard = () => {
         <div className='bg-white rounded-xl shadow-[0px_12px_32px_rgba(25,28,30,0.04)] overflow-hidden'>
           <div className="px-8 py-6 flex items-center justify-between border-b border-slate-50">
             <h3 className="font-headline text-xl font-bold">Recent Applications</h3>
-            <button class="text-primary text-sm font-semibold hover:underline">View all applications</button>
+            <button onClick={() => navigate('/dashboard/applications')} className="text-primary text-sm font-semibold hover:underline cursor-pointer">View all applications</button>
           </div>
           <div className='divide-y divide-slate-50'>
-            {/* card1 */}
-            <div className='px-8 py-6 flex items-center justify-between hover:bg-slate-50 transition-colors'>
-              <div className='flex items-center gap-6'>
-                <div className="h-12 w-12 bg-white rounded-xl shadow-sm border border-slate-100 flex items-center justify-center p-2">
-                  <img alt="Company Logo" className="h-full object-contain" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBETZyViwrOjLD2haeyRriii3phWhmBA3sn-PXaO3yb4SgicJlKviLy28yKuX6eGDriD2JQafLg8B3Y4Sw5jM7XBL6WfqKBM7Nk4GCKrgTEBullyHB-64gsf6fXoKYarp01yzFL6GLYAOdj5f1x9MjoKI_zVUi3E42s_G-4r6wEZOmMQ1hq8zA_DQ2gtwh8VhylQ0pwsXugoJ1ZpKM4sqtsx_8-_G-JdWFpsOBHh-2p-b4BFnGtZezqrUyN_Te1HtKZut_lqVI8zPo"/>
-                </div>
-                <div>
-                  <h4 className="font-bold text-on-surface">Senior Product Designer</h4>
-                  <p className="text-on-surface-variant text-sm">Google • Mountain View, CA</p>
-                </div>
+            {applications.length === 0 ? (
+              <div className="px-8 py-12 text-center">
+                <p className="text-slate-500 text-sm">No applications yet. Add one to get started!</p>
               </div>
-              <div className='flex items-center gap-12'>
-                <div className="text-right">
-                  <p className="text-[11px] font-bold uppercase tracking-wider text-slate-400 mb-1">Applied Date</p>
-                  <p clasName="text-sm text-desc">Oct 24, 2023</p>
-                </div>
-                <span className="px-3 py-1 bg-blue-200 text-desc rounded-full text-xs font-bold">Interviewing</span>
-                <button className="cursor-pointer p-2 text-slate-400 hover:text-desc transition-colors">
-                  <IoMdMore className='h-5 w-5'/>
-                </button>
-              </div>
-            </div>
-              {/* card2 */}
-              <div className='px-8 py-6 flex items-center justify-between hover:bg-slate-50 transition-colors'>
-              <div className='flex items-center gap-6'>
-                <div className="h-12 w-12 bg-white rounded-xl shadow-sm border border-slate-100 flex items-center justify-center p-2">
-                  <img alt="Company Logo" className="h-full object-contain" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBETZyViwrOjLD2haeyRriii3phWhmBA3sn-PXaO3yb4SgicJlKviLy28yKuX6eGDriD2JQafLg8B3Y4Sw5jM7XBL6WfqKBM7Nk4GCKrgTEBullyHB-64gsf6fXoKYarp01yzFL6GLYAOdj5f1x9MjoKI_zVUi3E42s_G-4r6wEZOmMQ1hq8zA_DQ2gtwh8VhylQ0pwsXugoJ1ZpKM4sqtsx_8-_G-JdWFpsOBHh-2p-b4BFnGtZezqrUyN_Te1HtKZut_lqVI8zPo"/>
-                </div>
-                <div>
-                  <h4 className="font-bold text-on-surface">Senior Product Designer</h4>
-                  <p className="text-on-surface-variant text-sm">Google • Mountain View, CA</p>
-                </div>
-              </div>
-              <div className='flex items-center gap-12'>
-                <div className="text-right">
-                  <p className="text-[11px] font-bold uppercase tracking-wider text-slate-400 mb-1">Applied Date</p>
-                  <p clasName="text-sm text-desc">Oct 24, 2023</p>
-                </div>
-                <span className="px-3 py-1 bg-blue-200 text-desc rounded-full text-xs font-bold">Interviewing</span>
-                <button className="cursor-pointer p-2 text-slate-400 hover:text-desc transition-colors">
-                  <IoMdMore className='h-5 w-5'/>
-                </button>
-              </div>
-            </div>
-            {/* card3 */}
-            <div className='px-8 py-6 flex items-center justify-between hover:bg-slate-50 transition-colors'>
-              <div className='flex items-center gap-6'>
-                <div className="h-12 w-12 bg-white rounded-xl shadow-sm border border-slate-100 flex items-center justify-center p-2">
-                  <img alt="Company Logo" className="h-full object-contain" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBETZyViwrOjLD2haeyRriii3phWhmBA3sn-PXaO3yb4SgicJlKviLy28yKuX6eGDriD2JQafLg8B3Y4Sw5jM7XBL6WfqKBM7Nk4GCKrgTEBullyHB-64gsf6fXoKYarp01yzFL6GLYAOdj5f1x9MjoKI_zVUi3E42s_G-4r6wEZOmMQ1hq8zA_DQ2gtwh8VhylQ0pwsXugoJ1ZpKM4sqtsx_8-_G-JdWFpsOBHh-2p-b4BFnGtZezqrUyN_Te1HtKZut_lqVI8zPo"/>
-                </div>
-                <div>
-                  <h4 className="font-bold text-on-surface">Senior Product Designer</h4>
-                  <p className="text-on-surface-variant text-sm">Google • Mountain View, CA</p>
-                </div>
-              </div>
-              <div className='flex items-center gap-12'>
-                <div className="text-right">
-                  <p className="text-[11px] font-bold uppercase tracking-wider text-slate-400 mb-1">Applied Date</p>
-                  <p clasName="text-sm text-desc">Oct 24, 2023</p>
-                </div>
-                <span className="px-3 py-1 bg-blue-200 text-desc rounded-full text-xs font-bold">Interviewing</span>
-                <button className="cursor-pointer p-2 text-slate-400 hover:text-desc transition-colors">
-                  <IoMdMore className='h-5 w-5'/>
-                </button>
-              </div>
-            </div>
+            ) : (
+              applications
+                .slice()
+                .sort((a, b) => new Date(b.dateApplied) - new Date(a.dateApplied))
+                .slice(0, 3)
+                .map((app) => {
+                  const statusColors = {
+                    'Applied': 'bg-blue-100 text-blue-800',
+                    'Interviewing': 'bg-purple-100 text-purple-800',
+                    'Offer': 'bg-green-100 text-green-800',
+                    'Rejected': 'bg-red-100 text-red-800'
+                  }
+                  
+                  const formatDate = (dateString) => {
+                    const date = new Date(dateString)
+                    return date.toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' })
+                  }
+
+                  return (
+                    <div key={app.id} className='px-8 py-6 flex items-center justify-between hover:bg-slate-50 transition-colors'>
+                      <div className='flex items-center gap-6 flex-1'>
+                        <div className="h-12 w-12 bg-gradient-to-br from-blue-400 to-blue-600 rounded-xl shadow-sm border border-blue-200 flex items-center justify-center text-white font-bold text-lg">
+                          {app.companyName.charAt(0).toUpperCase()}
+                        </div>
+                        <div>
+                          <h4 className="font-bold text-on-surface">{app.jobRole}</h4>
+                          <p className="text-on-surface-variant text-sm">{app.companyName}</p>
+                        </div>
+                      </div>
+                      <div className='flex items-center gap-12'>
+                        <div className="text-right">
+                          <p className="text-[11px] font-bold uppercase tracking-wider text-slate-400 mb-1">Applied Date</p>
+                          <p className="text-sm text-desc">{formatDate(app.dateApplied)}</p>
+                        </div>
+                        <span className={`px-3 py-1 rounded-full text-xs font-bold ${statusColors[app.status] || 'bg-gray-100 text-gray-800'}`}>
+                          {app.status}
+                        </span>
+                      </div>
+                    </div>
+                  )
+                })
+            )}
           </div>
         </div>
       </div>
     </section>
+    <AddApplicationModal 
+      isOpen={isModalOpen} 
+      onClose={() => setIsModalOpen(false)}
+      onSave={async (formData) => {
+        await addApplication(formData)
+        setIsModalOpen(false)
+      }}
+    />
     </>
   )
 }

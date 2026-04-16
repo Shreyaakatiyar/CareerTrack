@@ -16,7 +16,6 @@ const AddApplicationModal = ({ isOpen, onClose, onSave, editingApp = null, onDel
   // Initialize form with editing data when editing app changes
   useEffect(() => {
     if (editingApp) {
-      console.log('Populating form with editingApp:', editingApp) // Debug
       setFormData({
         companyName: editingApp.companyName || '',
         jobRole: editingApp.jobRole || '',
@@ -26,7 +25,6 @@ const AddApplicationModal = ({ isOpen, onClose, onSave, editingApp = null, onDel
         internalNotes: editingApp.internalNotes || ''
       })
     } else {
-      console.log('Clearing form (no editingApp)') // Debug
       setFormData({
         companyName: '',
         jobRole: '',

@@ -14,7 +14,6 @@ const Applications = () => {
   }
 
   const handleEditApplication = (app) => {
-    console.log('Editing app:', app) // Debug
     setEditingApp(app)
     setIsModalOpen(true)
   }

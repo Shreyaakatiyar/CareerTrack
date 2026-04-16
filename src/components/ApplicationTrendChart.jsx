@@ -23,13 +23,27 @@ ChartJS.register(
   Filler
 )
 
-const ApplicationTrendChart = () => {
+const ApplicationTrendChart = ({ applications = [] }) => {
+  // Calculate monthly data from applications
+  const months = ['January', 'February', 'March', 'April', 'May', 'June']
+  const monthlyData = [0, 0, 0, 0, 0, 0]
+  
+  applications.forEach(app => {
+    if (app.dateApplied) {
+      const date = new Date(app.dateApplied)
+      const monthIndex = date.getMonth()
+      if (monthIndex >= 0 && monthIndex < 6) {
+        monthlyData[monthIndex]++
+      }
+    }
+  })
+
   const data = {
-    labels: ['January', 'February', 'March', 'April', 'May', 'June'],
+    labels: months,
     datasets: [
       {
         label: 'Applications Submitted',
-        data: [12, 19, 8, 25, 32, 28],
+        data: monthlyData,
         borderColor: '#2563eb',
         backgroundColor: 'rgba(37, 99, 235, 0.1)',
         fill: true,
