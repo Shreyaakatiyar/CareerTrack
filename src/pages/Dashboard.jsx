@@ -163,14 +163,14 @@ const Dashboard = () => {
           // Normal Dashboard View
           <div>
             <div className='mb-12'>
-              <h2 className="font-heading text-3xl font-extrabold text-desc tracking-tight mb-2">Track your applications efficiently</h2>
+              <h2 className="font-heading text-3xl font-bold text-desc tracking-tight mb-2">Track your applications efficiently</h2>
               <p className="text-desc/60 text-md">Good morning, {user?.displayName || 'there'}. You have {interviews} interviews scheduled.</p>
             </div>
 
             {/* stats */}
             <div className='grid grid-cols-1 md:grid-cols-4 gap-6 mb-12'>
               {/* applications */}
-              <div className='bg-white p-6 rounded-xl shadow-[0px_12px_32px_rgba(25,28,30,0.04)] hover:scale-[1.02] transition-transform'>
+              <div className='bg-white p-6 rounded-2xl shadow-[0px_12px_32px_rgba(25,28,30,0.04)] hover:scale-[1.02] transition-transform'>
                 <div className='flex justify-between items-start mb-4'>
                   <div className='p-2 bg-blue-50 text-blue-600 rounded-lg'>
                     <TbFileDescriptionFilled/>
@@ -181,7 +181,7 @@ const Dashboard = () => {
                 <p className="font-heading text-3xl font-bold">{totalApplications}</p> 
               </div>
               {/* interviews  */}
-              <div className='bg-white p-6 rounded-xl shadow-[0px_12px_32px_rgba(25,28,30,0.04)] hover:scale-[1.02] transition-transform'>
+              <div className='bg-white p-6 rounded-2xl shadow-[0px_12px_32px_rgba(25,28,30,0.04)] hover:scale-[1.02] transition-transform'>
                 <div className='flex justify-between items-start mb-4'>
                   <div className='p-2 bg-purple-50 text-purple-600 rounded-lg'>
                     <MdForum/>
@@ -192,7 +192,7 @@ const Dashboard = () => {
                 <p className="font-heading text-3xl font-bold">{interviews}</p> 
               </div>
               {/* rejections */}
-              <div className='bg-white p-6 rounded-xl shadow-[0px_12px_32px_rgba(25,28,30,0.04)] hover:scale-[1.02] transition-transform'>
+              <div className='bg-white p-6 rounded-2xl shadow-[0px_12px_32px_rgba(25,28,30,0.04)] hover:scale-[1.02] transition-transform'>
                 <div className='flex justify-between items-start mb-4'>
                   <div className='p-2 bg-rose-50 text-rose-600 rounded-lg'>
                     <MdCancel/>
@@ -202,7 +202,7 @@ const Dashboard = () => {
                 <p className="font-heading text-3xl font-bold">{rejections}</p> 
               </div>
               {/* offers */}
-              <div className='bg-white p-6 rounded-xl shadow-[0px_12px_32px_rgba(25,28,30,0.04)] hover:scale-[1.02] transition-transform'>
+              <div className='bg-white p-6 rounded-2xl shadow-[0px_12px_32px_rgba(25,28,30,0.04)] hover:scale-[1.02] transition-transform'>
                 <div className='flex justify-between items-start mb-4'>
                   <div className='p-2 bg-primary/10 text-primary rounded-lg'>
                     <FaStar/>
@@ -217,7 +217,7 @@ const Dashboard = () => {
             {/* charts and analytics */}
             <div className='grid grid-cols-1 lg:grid-cols-3 gap-8 mb-12'>
               {/* trend line chart */}
-              <div className='lg:col-span-2 bg-white p-8 rounded-xl shadow-[0px_12px_32px_rgba(25,28,30,0.04)]'>
+              <div className='lg:col-span-2 bg-white p-8 rounded-2xl shadow-[0px_12px_32px_rgba(25,28,30,0.04)]'>
                 <div className='flex items-center justify-between mb-8'>
                   <div>
                     <h3 className="font-heading text-xl font-bold">Application Trends</h3>
@@ -245,7 +245,7 @@ const Dashboard = () => {
               </div>
             </div>
             {/* recent applications */}
-            <div className='bg-white rounded-xl shadow-[0px_12px_32px_rgba(25,28,30,0.04)] overflow-hidden'>
+            <div className='bg-white rounded-2xl shadow-[0px_12px_32px_rgba(25,28,30,0.04)] overflow-hidden'>
               <div className="px-8 py-6 flex items-center justify-between border-b border-slate-50">
                 <h3 className="font-headline text-xl font-bold">Recent Applications</h3>
                 <button onClick={() => navigate('/dashboard/applications')} className="text-primary text-sm font-semibold hover:underline cursor-pointer">View all applications</button>

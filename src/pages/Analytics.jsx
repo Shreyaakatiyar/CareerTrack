@@ -113,14 +113,20 @@ const Analytics = () => {
     <div className="min-h-screen bg-[#f6f8fb]">
 
       {/* HEADER */}
-      <div className="ml-64 px-8 pt-10 pb-6">
-        <h1 className="text-2xl font-semibold text-gray-900">Analytics</h1>
-        <p className="text-sm text-gray-500 mt-1">
-          Insights to improve your job search
-        </p>
+      <div className="bg-white border-b border-gray-100">
+        <div className="ml-64 px-8 py-8 flex justify-between items-center">
+            <div>
+                <h1 className="text-2xl font-semibold text-gray-900">
+              Analytics
+            </h1>
+            <p className="text-sm text-gray-500 mt-1">
+              Insights to improve your job search
+            </p>
+            </div>
+        </div>
       </div>
 
-      <div className="ml-64 px-8 pb-10 space-y-10">
+      <div className="ml-64 px-8 pb-10 space-y-10 mt-8">
 
         {/* PERFORMANCE */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
