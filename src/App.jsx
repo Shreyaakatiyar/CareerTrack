@@ -6,7 +6,6 @@ import Dashboard from "./pages/Dashboard";
 import Applications from "./pages/Applications";
 import Analytics from "./pages/Analytics";
 import AIInsights from "./pages/AIInsights";
-import EditProfile from "./pages/EditProfile";
 import SideNavbar from "./components/SideNavbar";
 import ProtectedRoute from "./components/ProtectedRoute";
 import { ApplicationsProvider } from "./context/ApplicationsContext";
@@ -55,15 +54,6 @@ function App() {
             <ProtectedRoute>
               <SideNavbar />
               <AIInsights />
-            </ProtectedRoute>
-          }
-        />
-        <Route
-          path="/dashboard/profile"
-          element={
-            <ProtectedRoute>
-              <SideNavbar />
-              <EditProfile />
             </ProtectedRoute>
           }
         />
