@@ -19,7 +19,6 @@ const SideNavbar = () => {
     { id: "applications", label: "Applications", icon: IoIosListBox, path: "/dashboard/applications" },
     { id: "analytics", label: "Analytics", icon: IoAnalyticsSharp, path: "/dashboard/analytics" },
     { id: "insights", label: "AI Insights", icon: MdPsychology, path: "/dashboard/insights" },
-    { id: "settings", label: "Settings", icon: MdSettings, path: "/dashboard/settings" },
   ];
 
   const getActiveNav = () => {
